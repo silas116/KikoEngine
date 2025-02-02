@@ -1,0 +1,79 @@
+Phase 1: Core Engine Setup
+🔹 1. Application & Loop Structure
+Create a Game or Application class that manages the game loop.
+Implement a basic update-render loop.
+Add delta time calculations for smooth updates.
+🔹 2. Input Handling
+Integrate keyboard and mouse input (GLFW supports this).
+Create an InputManager to handle key states.
+Implement basic camera movement using WASD & mouse.
+🔹 3. Logging System
+Create a Logger class for debugging.
+Use std::cout or a logging library like spdlog.
+🔹 4. Window Resizing & Callbacks
+Handle window resizing properly.
+Set up OpenGL viewport adjustments.
+Phase 2: Graphics & Rendering
+🔹 5. Graphics Abstraction
+Implement a Renderer class to handle rendering calls.
+Abstract OpenGL commands into functions.
+🔹 6. Shader System
+Load & compile GLSL shaders from files.
+Create a Shader class for easy use (compilation, binding, setting uniforms).
+🔹 7. Basic 2D/3D Rendering
+Create a Mesh class to handle vertex buffers.
+Render a simple triangle or quad using VAOs & VBOs.
+Load & display a texture.
+🔹 8. Camera System
+Implement a Camera class (with perspective & orthographic options).
+Add movement & rotation (FPS-style or orbit camera).
+Phase 3: Asset Management
+🔹 9. Texture Loading
+Use stb_image.h to load textures.
+Implement a Texture class.
+🔹 10. Model Loading
+Use Assimp to load .obj and .fbx models.
+Implement a Model class that handles mesh & textures.
+🔹 11. Resource Management
+Create a ResourceManager for caching assets (textures, models, shaders).
+Implement lazy loading to avoid duplicate asset loads.
+Phase 4: Game Features
+🔹 12. Scene System
+Create a Scene class that manages objects & updates them.
+Implement a GameObject base class.
+🔹 13. Component System (ECS or Simple)
+Implement a component-based system (e.g., Transform, Renderable, Physics).
+Optionally, use an Entity Component System (ECS) for better scalability.
+🔹 14. Physics Engine
+Integrate Bullet Physics or write a simple physics engine.
+Add collision detection & response.
+Phase 5: Advanced Rendering & Effects
+🔹 15. Lighting System
+Implement basic Phong lighting (ambient, diffuse, specular).
+Add support for directional, point, and spotlights.
+🔹 16. Post-Processing
+Implement a framebuffer system.
+Add effects like bloom, motion blur, or HDR.
+🔹 17. Particle System
+Create a ParticleSystem for effects like fire, smoke, or rain.
+Optimize with GPU instancing.
+Phase 6: Optimization & Tools
+🔹 18. Performance Optimization
+Implement frustum culling & level-of-detail (LOD).
+Optimize rendering with batching.
+🔹 19. Scripting System
+Integrate a scripting language (Lua or Python).
+Allow game logic to be written outside of C++.
+🔹 20. Engine UI
+Use Dear ImGui for debugging & tools.
+Add an inspector panel for real-time object editing.
+Final Phase: Packaging & Usability
+🔹 21. Game Loop & Scene Management
+Implement Start, Pause, Resume, and Quit functionality.
+Save & load scenes from files.
+🔹 22. Asset Pipeline
+Create tools for importing & managing assets efficiently.
+Implement serialization (JSON/XML) for game objects.
+🔹 23. Build System & Deployment
+Optimize the build system for distribution.
+Package everything into an executable.
