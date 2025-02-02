@@ -1,0 +1,4 @@
+C:/Users/Silas/CLionProjects/Kiko/cmake-build-debug/CMakeFiles/glad.dir
+C:/Users/Silas/CLionProjects/Kiko/cmake-build-debug/CMakeFiles/Kiko.dir
+C:/Users/Silas/CLionProjects/Kiko/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Silas/CLionProjects/Kiko/cmake-build-debug/CMakeFiles/rebuild_cache.dir
