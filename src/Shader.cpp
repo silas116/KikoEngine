@@ -22,6 +22,9 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath) {
     glDeleteShader(vertex);
     glDeleteShader(fragment);
 }
+void Shader::SetMat4(const std::string &name, const glm::mat4 &mat) {
+    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
 void Shader::Use() {
     glUseProgram(ID);
 }
@@ -61,3 +64,4 @@ unsigned int Shader::CompileShader(const char* code, GLenum type) {
     }
     return shader;
 }
+

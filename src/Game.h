@@ -8,6 +8,7 @@
 #include <GLFW/glfw3.h>
 #include "Renderer.h"
 #include "InputManager.h"
+#include "OrbitCamera.h"
 #include "Scene.h"
 
 class Game {
@@ -27,6 +28,7 @@ private:
     Renderer* renderer;
     InputManager* inputManager;
     Scene* currentScene;
+    OrbitCamera* camera;
 
     bool isRunning;
     float lastFrameTime;

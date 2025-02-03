@@ -12,10 +12,23 @@
 Renderer::Renderer() {
     glEnable(GL_DEPTH_TEST);
     shader = new Shader("C:/Users/Silas/CLionProjects/Kiko/src/vertex_shader.glsl", "C:/Users/Silas/CLionProjects/Kiko/src/fragment_shader.glsl");
+
+    // Define triangle vertices and indices
+    std::vector<Vertex> vertices = {
+        {{ 0.5f,  0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.5f, 1.0f}},
+        {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
+        {{ 0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},
+        {{-0.5f,  0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}}
+    };
+    std::vector<unsigned int> indices = { 0, 1, 2, 2, 3, 0 };
+
+    // Create and store the mesh once
+    mesh = new Mesh(vertices, indices);
 }
 
 Renderer::~Renderer() {
     delete shader;
+    delete mesh;
 }
 
 void Renderer::Clear() const {
@@ -30,34 +43,35 @@ void Renderer::DrawTriangle() {
     if (!shader) {
         std::cerr << "Shader konnte nicht geladen werden!" << std::endl;
     }
-    float vertices[] = {
-        0.0f,  1.0f, 0.8f,
-       -0.5f, -1.0f, 0.8f,
-        0.5f, -0.5f, 0.0f
+    std::vector<Vertex> vertices = {
+        {{ 0.5f,  0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.5f, 1.0f}},
+        {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
+        {{ 0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},
+        {{ -0.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}}
     };
 
-    if (VAO == 0) {  // Erst einmalig erzeugen
+    std::vector<unsigned int> indices = { 0, 1, 2, 2, 3, 0 };
 
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-
-        glBindVertexArray(VAO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
-    }
-
+    mesh = new Mesh(vertices, indices);
 
     shader->Use();  // Aktivieren
 
+    // **1. Model Matrix (Identity for now)**
+    glm::mat4 model = glm::mat4(1.0f);
 
-    glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    glBindVertexArray(0);
+    // **2. View Matrix (from the Camera)**
+    glm::mat4 view = camera.GetViewMatrix();  // THIS IS WHAT YOU WERE MISSING!
+
+    // **3. Projection Matrix (Perspective)**
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f),  // FOV
+                                            800.0f / 600.0f,       // Aspect Ratio
+                                            0.1f, 100.0f);         // Near and Far planes
+
+    // **4. Pass Matrices to the Shader**
+    shader->SetMat4("model", model);
+    shader->SetMat4("view", view);
+    shader->SetMat4("projection", projection);
+
+    mesh->Draw();
 }
 

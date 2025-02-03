@@ -24,6 +24,9 @@ Create a Shader class for easy use (compilation, binding, setting uniforms).
 Create a Mesh class to handle vertex buffers.
 Render a simple triangle or quad using VAOs & VBOs.
 Load & display a texture.
+
+
+
 🔹 8. Camera System
 Implement a Camera class (with perspective & orthographic options).
 Add movement & rotation (FPS-style or orbit camera).

@@ -7,6 +7,7 @@
 
 #include <string>
 #include <glad/glad.h>
+#include <glm/fwd.hpp>
 
 class Shader {
 public:
@@ -17,6 +18,8 @@ public:
     void SetUniform(const std::string& name, float value);
     void SetUniform(const std::string& name, int value);
     void SetUniform(const std::string& name, float x, float y, float z);
+    void SetMat4(const std::string &name, const glm::mat4 &mat);
+
 private:
     std::string LoadShaderCode(const char* filePath);
     unsigned int CompileShader(const char* code, GLenum type);

@@ -1,52 +1,77 @@
-//
-// Created by Silas on 01/02/2025.
-//
-// @TODO: Complete Class Missing
 #include "InputManager.h"
+#include <iostream>
 
-GLFWwindow* InputManager::s_Window = nullptr;
-std::unordered_map<int, bool> InputManager::s_KeyStates;
-std::unordered_map<int, bool> InputManager::s_MouseStates;
+InputManager::InputManager() : lastMouseX(0), lastMouseY(0), deltaX(0), deltaY(0), scrollOffset(0) {}
 
-void InputManager::Init(GLFWwindow* window) {
-    s_Window = window;
+InputManager& InputManager::GetInstance() {
+    static InputManager instance;
+    return instance;
+}
 
-    // GLFW Callbacks setzen
+void InputManager::ProcessInput(GLFWwindow* window) {
     glfwSetKeyCallback(window, KeyCallback);
     glfwSetMouseButtonCallback(window, MouseButtonCallback);
-    glfwSetCursorPosCallback(window, CursorPositionCallback);
+    glfwSetCursorPosCallback(window, MouseMoveCallback);
+    glfwSetScrollCallback(window, ScrollCallback);
 }
 
 void InputManager::Update() {
-    // Hier können zukünftige Events verarbeitet werden (z. B. Keybuffer reset)
+    deltaX = 0.0;
+    deltaY = 0.0;
+    scrollOffset = 0.0;
 }
 
+// 🔹 Check if a key is pressed
 bool InputManager::IsKeyPressed(int key) {
-    return s_KeyStates[key];
+    return keyStates[key];
 }
 
+// 🔹 Check if a mouse button is pressed
 bool InputManager::IsMouseButtonPressed(int button) {
-    return s_MouseStates[button];
+    return mouseButtonStates[button];
 }
 
-void InputManager::GetMousePosition(double& x, double& y) {
-    glfwGetCursorPos(s_Window, &x, &y);
-}
+// 🔹 Get Mouse Movement
+double InputManager::GetMouseDeltaX() const { return deltaX; }
+double InputManager::GetMouseDeltaY() const { return deltaY; }
 
-// --- Callbacks ---
+// 🔹 Get Scroll Offset
+double InputManager::GetScrollOffset() const { return scrollOffset; }
+
+// 🔹 Key Press Callback
 void InputManager::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    if (action == GLFW_PRESS)
-        s_KeyStates[key] = true;
-    else if (action == GLFW_RELEASE)
-        s_KeyStates[key] = false;
+    if (action == GLFW_PRESS) {
+        GetInstance().keyStates[key] = true;
+    } else if (action == GLFW_RELEASE) {
+        GetInstance().keyStates[key] = false;
+    }
 }
 
+// 🔹 Mouse Button Callback
 void InputManager::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
-    if (action == GLFW_PRESS)
-        s_MouseStates[button] = true;
-    else if (action == GLFW_RELEASE)
-        s_MouseStates[button] = false;
+    if (action == GLFW_PRESS) {
+        GetInstance().mouseButtonStates[button] = true;
+    } else if (action == GLFW_RELEASE) {
+        GetInstance().mouseButtonStates[button] = false;
+    }
 }
-void InputManager::CursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {
-    // Falls du spezielle Cursor-Logik willst, hier einfügen
+
+// 🔹 Mouse Movement Callback
+void InputManager::MouseMoveCallback(GLFWwindow* window, double xpos, double ypos) {
+    auto& instance = GetInstance();
+    if (instance.firstMouse) {
+        instance.lastMouseX = xpos;
+        instance.lastMouseY = ypos;
+        instance.firstMouse = false;
+    }
+
+    instance.deltaX = xpos - instance.lastMouseX;
+    instance.deltaY = instance.lastMouseY - ypos; // Inverted Y-axis
+    instance.lastMouseX = xpos;
+    instance.lastMouseY = ypos;
+}
+
+// 🔹 Scroll Callback
+void InputManager::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+    GetInstance().scrollOffset = yoffset;
 }

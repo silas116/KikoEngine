@@ -30,7 +30,11 @@ add_executable(Kiko src/main.cpp
         src/Scene.cpp
         src/Scene.h
         src/Shader.cpp
-        src/Shader.h)
+        src/Shader.h
+        src/Mesh.cpp
+        src/Mesh.h
+        src/OrbitCamera.cpp
+        src/OrbitCamera.h)
 # GLFW, GLAD und OpenGL verlinken
 #target_link_libraries(Kiko PRIVATE glad glfw OpenGL::GL)
 

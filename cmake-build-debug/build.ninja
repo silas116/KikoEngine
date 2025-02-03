@@ -129,6 +129,22 @@ build CMakeFiles/Kiko.dir/src/Shader.cpp.obj: CXX_COMPILER__Kiko_unscanned_Debug
   OBJECT_DIR = CMakeFiles\Kiko.dir
   OBJECT_FILE_DIR = CMakeFiles\Kiko.dir\src
 
+build CMakeFiles/Kiko.dir/src/Mesh.cpp.obj: CXX_COMPILER__Kiko_unscanned_Debug C$:/Users/Silas/CLionProjects/Kiko/src/Mesh.cpp || cmake_object_order_depends_target_Kiko
+  DEFINES = -DGLFW_DLL
+  DEP_FILE = CMakeFiles\Kiko.dir\src\Mesh.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/Silas/CLionProjects/Kiko/vendor/stb -IC:/Users/Silas/CLionProjects/Kiko/vendor/glm -IC:/Users/Silas/CLionProjects/Kiko/vendor/glad/include -isystem C:/Users/Silas/.vcpkg-clion/vcpkg/installed/x64-mingw-dynamic/include
+  OBJECT_DIR = CMakeFiles\Kiko.dir
+  OBJECT_FILE_DIR = CMakeFiles\Kiko.dir\src
+
+build CMakeFiles/Kiko.dir/src/OrbitCamera.cpp.obj: CXX_COMPILER__Kiko_unscanned_Debug C$:/Users/Silas/CLionProjects/Kiko/src/OrbitCamera.cpp || cmake_object_order_depends_target_Kiko
+  DEFINES = -DGLFW_DLL
+  DEP_FILE = CMakeFiles\Kiko.dir\src\OrbitCamera.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/Silas/CLionProjects/Kiko/vendor/stb -IC:/Users/Silas/CLionProjects/Kiko/vendor/glm -IC:/Users/Silas/CLionProjects/Kiko/vendor/glad/include -isystem C:/Users/Silas/.vcpkg-clion/vcpkg/installed/x64-mingw-dynamic/include
+  OBJECT_DIR = CMakeFiles\Kiko.dir
+  OBJECT_FILE_DIR = CMakeFiles\Kiko.dir\src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Kiko
@@ -137,7 +153,7 @@ build CMakeFiles/Kiko.dir/src/Shader.cpp.obj: CXX_COMPILER__Kiko_unscanned_Debug
 #############################################
 # Link the executable Kiko.exe
 
-build Kiko.exe: CXX_EXECUTABLE_LINKER__Kiko_Debug CMakeFiles/Kiko.dir/src/main.cpp.obj CMakeFiles/Kiko.dir/src/Game.cpp.obj CMakeFiles/Kiko.dir/src/Renderer.cpp.obj CMakeFiles/Kiko.dir/src/InputManager.cpp.obj CMakeFiles/Kiko.dir/src/Scene.cpp.obj CMakeFiles/Kiko.dir/src/Shader.cpp.obj | libglad.a C$:/Users/Silas/.vcpkg-clion/vcpkg/installed/x64-mingw-dynamic/debug/lib/libglfw3dll.a || libglad.a
+build Kiko.exe: CXX_EXECUTABLE_LINKER__Kiko_Debug CMakeFiles/Kiko.dir/src/main.cpp.obj CMakeFiles/Kiko.dir/src/Game.cpp.obj CMakeFiles/Kiko.dir/src/Renderer.cpp.obj CMakeFiles/Kiko.dir/src/InputManager.cpp.obj CMakeFiles/Kiko.dir/src/Scene.cpp.obj CMakeFiles/Kiko.dir/src/Shader.cpp.obj CMakeFiles/Kiko.dir/src/Mesh.cpp.obj CMakeFiles/Kiko.dir/src/OrbitCamera.cpp.obj | libglad.a C$:/Users/Silas/.vcpkg-clion/vcpkg/installed/x64-mingw-dynamic/debug/lib/libglfw3dll.a || libglad.a
   FLAGS = -g
   LINK_LIBRARIES = libglad.a  C:/Users/Silas/.vcpkg-clion/vcpkg/installed/x64-mingw-dynamic/debug/lib/libglfw3dll.a  -lopengl32  -lglu32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Kiko.dir

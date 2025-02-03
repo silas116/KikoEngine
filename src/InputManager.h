@@ -1,31 +1,35 @@
-//
-// Created by Silas on 01/02/2025.
-//
-// @TODO: Complete Class Missing
-#ifndef INPUTMANAGER_H
-#define INPUTMANAGER_H
-
+#pragma once
 #include <GLFW/glfw3.h>
 #include <unordered_map>
 
 class InputManager {
 public:
-    static void Init(GLFWwindow* window);
-    static void Update(); // 🚀 Neu: Pro Frame aktualisieren
+    static InputManager& GetInstance(); // Singleton pattern
 
-    static bool IsKeyPressed(int key);
-    static bool IsMouseButtonPressed(int button);
-    static void GetMousePosition(double& x, double& y);
+    void ProcessInput(GLFWwindow* window);
+    void Update();
+
+    bool IsKeyPressed(int key);
+    bool IsMouseButtonPressed(int button);
+
+    double GetMouseDeltaX() const;
+    double GetMouseDeltaY() const;
+    double GetScrollOffset() const;
 
 private:
-    static GLFWwindow* s_Window;
-    static std::unordered_map<int, bool> s_KeyStates;
-    static std::unordered_map<int, bool> s_MouseStates;
+    InputManager();
 
     static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
     static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-    static void CursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
+    static void MouseMoveCallback(GLFWwindow* window, double xpos, double ypos);
+    static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+
+    std::unordered_map<int, bool> keyStates;
+    std::unordered_map<int, bool> mouseButtonStates;
+
+    double lastMouseX, lastMouseY;
+    double deltaX, deltaY;
+    double scrollOffset;
+
+    bool firstMouse = true;
 };
-
-#endif
-

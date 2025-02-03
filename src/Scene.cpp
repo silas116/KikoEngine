@@ -14,9 +14,7 @@ Scene::~Scene() {
 }
 void Scene::Update(float deltaTime) {
     //  Hier könnte Physik, Kollisionen etc. verarbeitet werden
-    if (InputManager::IsKeyPressed(GLFW_KEY_W)) {
-        std::cout << "W key pressed!" << std::endl;
-    }
+
 }
 void Scene::Render(Renderer& renderer) {
     renderer.Clear();
