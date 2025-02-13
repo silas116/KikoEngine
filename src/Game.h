@@ -15,6 +15,7 @@ class Game {
 public:
     Game(int width, int height, const char* title);
     ~Game();
+    OrbitCamera* camera;
 
     void Run();  // Main game loop
 
@@ -28,7 +29,7 @@ private:
     Renderer* renderer;
     InputManager* inputManager;
     Scene* currentScene;
-    OrbitCamera* camera;
+
 
     bool isRunning;
     float lastFrameTime;

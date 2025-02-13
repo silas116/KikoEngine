@@ -3,27 +3,48 @@
 //
 // @TODO: Complete Class Missing
 #include "Renderer.h"
-
+#define GLM_ENABLE_EXPERIMENTAL
 #include <iostream>
 
 #include "Shader.h"
 #include <glad/glad.h>
+#include <glm/gtx/string_cast.hpp>
+#include "OrbitCamera.h"
 
-Renderer::Renderer() {
+extern OrbitCamera camera;
+
+Renderer::Renderer(OrbitCamera* cam) {
     glEnable(GL_DEPTH_TEST);
     shader = new Shader("C:/Users/Silas/CLionProjects/Kiko/src/vertex_shader.glsl", "C:/Users/Silas/CLionProjects/Kiko/src/fragment_shader.glsl");
 
+    camera = cam;
     // Define triangle vertices and indices
     std::vector<Vertex> vertices = {
-        {{ 0.5f,  0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.5f, 1.0f}},
-        {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
-        {{ 0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},
-        {{-0.5f,  0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}}
-    };
-    std::vector<unsigned int> indices = { 0, 1, 2, 2, 3, 0 };
+        // Base square
+        {{-0.5f, 0.0f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}},
+        {{ 0.5f, 0.0f, -0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 0.0f}},
+        {{ 0.5f, 0.0f,  0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},
+        {{-0.5f, 0.0f,  0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}},
 
-    // Create and store the mesh once
+        // Apex
+        {{ 0.0f, 0.7f,  0.0f}, {0.0f, 1.0f, 0.0f}, {0.5f, 0.5f}}
+    };
+
+    std::vector<unsigned int> indices = {
+        // Base (two triangles)
+        0, 1, 2,
+        0, 2, 3,
+
+        // Sides (triangles from base to apex)
+        0, 1, 4,
+        1, 2, 4,
+        2, 3, 4,
+        3, 0, 4
+    };
+
+    // Create and store the mesh
     mesh = new Mesh(vertices, indices);
+
 }
 
 Renderer::~Renderer() {
@@ -43,16 +64,6 @@ void Renderer::DrawTriangle() {
     if (!shader) {
         std::cerr << "Shader konnte nicht geladen werden!" << std::endl;
     }
-    std::vector<Vertex> vertices = {
-        {{ 0.5f,  0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.5f, 1.0f}},
-        {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}},
-        {{ 0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}},
-        {{ -0.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}}
-    };
-
-    std::vector<unsigned int> indices = { 0, 1, 2, 2, 3, 0 };
-
-    mesh = new Mesh(vertices, indices);
 
     shader->Use();  // Aktivieren
 
@@ -60,7 +71,7 @@ void Renderer::DrawTriangle() {
     glm::mat4 model = glm::mat4(1.0f);
 
     // **2. View Matrix (from the Camera)**
-    glm::mat4 view = camera.GetViewMatrix();  // THIS IS WHAT YOU WERE MISSING!
+    glm::mat4 view = camera->GetViewMatrix();  // THIS IS WHAT YOU WERE MISSING!
 
     // **3. Projection Matrix (Perspective)**
     glm::mat4 projection = glm::perspective(glm::radians(45.0f),  // FOV

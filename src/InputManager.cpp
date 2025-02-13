@@ -69,6 +69,7 @@ void InputManager::MouseMoveCallback(GLFWwindow* window, double xpos, double ypo
     instance.deltaY = instance.lastMouseY - ypos; // Inverted Y-axis
     instance.lastMouseX = xpos;
     instance.lastMouseY = ypos;
+
 }
 
 // 🔹 Scroll Callback

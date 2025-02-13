@@ -42,12 +42,16 @@ Game::Game(int width, int height, const char* title) {
 
 
 
-    // Initialize Renderer
-    renderer = new Renderer();
+
 
     //Initialize inputManager
     InputManager::GetInstance().ProcessInput(window);
-    camera = new OrbitCamera(10.0f, 45.0f, 30.0f);
+
+    camera = new OrbitCamera(11.0f, 45.0f, 30.0f);
+
+    // Initialize Renderer
+    renderer = new Renderer(camera);
+
     isRunning = true;
     lastFrameTime = 0.0f;
 
@@ -60,6 +64,9 @@ Game::~Game() {
     glfwDestroyWindow(window);
     glfwTerminate();
 }
+
+
+
 //Main Loop
 void Game::Run() {
     Render();
@@ -84,11 +91,6 @@ void Game::ProcessInput() {
     // Check Mouse Input
     double deltaX = input.GetMouseDeltaX();
     double deltaY = input.GetMouseDeltaY();
-
-    if (deltaX != 0 || deltaY != 0) {
-        std::cout << "Mouse moved: " << deltaX << ", " << deltaY << std::endl;
-    }
-
     camera->ProcessMouseMovement(deltaX, deltaY);
     camera->ProcessMouseScroll(input.GetScrollOffset());
     input.Update();

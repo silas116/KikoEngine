@@ -5,12 +5,13 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 #include "Mesh.h"
+#include "OrbitCamera.h"
 #include "Shader.h"
 
 
 class Renderer {
 public:
-    Renderer();
+    Renderer(OrbitCamera*);
     ~Renderer();
 
     void Clear() const;                   // Bildschirm leeren
@@ -20,6 +21,7 @@ public:
 private:
     Mesh* mesh;
     Shader* shader;
+    OrbitCamera* camera;
 
 };
 
