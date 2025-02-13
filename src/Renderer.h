@@ -7,6 +7,7 @@
 #include "Mesh.h"
 #include "OrbitCamera.h"
 #include "Shader.h"
+#include "Texture.h"
 
 
 class Renderer {
@@ -22,6 +23,7 @@ private:
     Mesh* mesh;
     Shader* shader;
     OrbitCamera* camera;
+    Texture* texture;
 
 };
 

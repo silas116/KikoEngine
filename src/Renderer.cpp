@@ -16,18 +16,18 @@ extern OrbitCamera camera;
 Renderer::Renderer(OrbitCamera* cam) {
     glEnable(GL_DEPTH_TEST);
     shader = new Shader("C:/Users/Silas/CLionProjects/Kiko/src/vertex_shader.glsl", "C:/Users/Silas/CLionProjects/Kiko/src/fragment_shader.glsl");
-
+    texture = new Texture("C:/Users/Silas/CLionProjects/Kiko/assets/Textures/img_1.png");
     camera = cam;
     // Define triangle vertices and indices
     std::vector<Vertex> vertices = {
         // Base square
-        {{-0.5f, 0.0f, -0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}},
-        {{ 0.5f, 0.0f, -0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 0.0f}},
-        {{ 0.5f, 0.0f,  0.5f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},
-        {{-0.5f, 0.0f,  0.5f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}},
+        {{-3.0f, 0.0f, -3.0f}, {0.0f, -1.0f, 0.0f}, {0.0f, 0.0f}},
+        {{ 3.0f, 0.0f, -3.0f}, {0.0f, -1.0f, 0.0f}, {1.0f, 0.0f}},
+        {{ 3.0f, 0.0f,  3.0f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},
+        {{-3.0f, 0.0f,  3.0f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}},
 
         // Apex
-        {{ 0.0f, 0.7f,  0.0f}, {0.0f, 1.0f, 0.0f}, {0.5f, 0.5f}}
+        {{ 0.0f, 3.0f,  0.0f}, {0.0f, 1.0f, 0.0f}, {0.5f, 0.5f}}
     };
 
     std::vector<unsigned int> indices = {
@@ -61,28 +61,37 @@ void Renderer::SetClearColor(float r, float g, float b, float a) {
 }
 
 void Renderer::DrawTriangle() {
+
     if (!shader) {
         std::cerr << "Shader konnte nicht geladen werden!" << std::endl;
+        return;
     }
 
-    shader->Use();  // Aktivieren
+    shader->Use();  // Activate the shader
 
-    // **1. Model Matrix (Identity for now)**
+    // 1. Model Matrix (Identity for now)
     glm::mat4 model = glm::mat4(1.0f);
 
-    // **2. View Matrix (from the Camera)**
-    glm::mat4 view = camera->GetViewMatrix();  // THIS IS WHAT YOU WERE MISSING!
+    // 2. View Matrix (from the Camera)
+    glm::mat4 view = camera->GetViewMatrix();
 
-    // **3. Projection Matrix (Perspective)**
+    // 3. Projection Matrix (Perspective)
     glm::mat4 projection = glm::perspective(glm::radians(45.0f),  // FOV
                                             800.0f / 600.0f,       // Aspect Ratio
                                             0.1f, 100.0f);         // Near and Far planes
 
-    // **4. Pass Matrices to the Shader**
+    // 4. Pass Matrices to the Shader
     shader->SetMat4("model", model);
     shader->SetMat4("view", view);
     shader->SetMat4("projection", projection);
 
+    // **5. Bind the Texture**
+    texture->Bind();  // Assuming you have a Texture class
+
+    // 6. Draw the Mesh
     mesh->Draw();
+
+    // **7. Unbind the Texture (Optional)**
+    texture->Unbind();
 }
 
