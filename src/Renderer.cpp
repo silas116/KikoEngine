@@ -26,8 +26,7 @@ Renderer::Renderer(OrbitCamera* cam) {
         {{ 3.0f, 0.0f,  3.0f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},
         {{-3.0f, 0.0f,  3.0f}, {0.0f, -1.0f, 0.0f}, {0.0f, 1.0f}},
 
-        // Apex
-        {{ 0.0f, 3.0f,  0.0f}, {0.0f, 1.0f, 0.0f}, {0.5f, 0.5f}}
+
     };
 
     std::vector<unsigned int> indices = {
@@ -35,11 +34,7 @@ Renderer::Renderer(OrbitCamera* cam) {
         0, 1, 2,
         0, 2, 3,
 
-        // Sides (triangles from base to apex)
-        0, 1, 4,
-        1, 2, 4,
-        2, 3, 4,
-        3, 0, 4
+
     };
 
     // Create and store the mesh
@@ -68,6 +63,8 @@ void Renderer::DrawTriangle() {
     }
 
     shader->Use();  // Activate the shader
+    shader->SetUniform("texture1", 0);  // Make sure the shader knows we're using texture unit 0
+
 
     // 1. Model Matrix (Identity for now)
     glm::mat4 model = glm::mat4(1.0f);
@@ -86,6 +83,7 @@ void Renderer::DrawTriangle() {
     shader->SetMat4("projection", projection);
 
     // **5. Bind the Texture**
+    glActiveTexture(GL_TEXTURE0);
     texture->Bind();  // Assuming you have a Texture class
 
     // 6. Draw the Mesh

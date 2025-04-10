@@ -27,10 +27,10 @@ Load & display a texture.
 🔹 8. Camera System
 Implement a Camera class (with perspective & orthographic options).
 Add movement & rotation (FPS-style or orbit camera).
-
 Phase 3: Asset Management
 🔹 9. Texture Loading
 Use stb_image.h to load textures.
+
 Implement a Texture class.
 🔹 10. Model Loading
 Use Assimp to load .obj and .fbx models.
